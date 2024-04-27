@@ -11,9 +11,11 @@ public class VariablesPractice {
         System.out.println("studentGrade : " + studentGrade);
 
         double carPrice = 25000;
+
         System.out.println("carPrice : " + carPrice);
 
         String employeeName = "Məlik";
+
         System.out.println("employeeName : " + employeeName);
 
     }
