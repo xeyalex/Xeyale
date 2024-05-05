@@ -7,5 +7,4 @@ public class Person {
     int age;
     String phone;
 
-
 }
