@@ -1,47 +1,45 @@
 package az.xeyale.balance.security;
 
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 
 @Component
 public class JwtUtil {
 
-    private String secretKey = "your_secret_key";  // Şifrəni dəyişdirin
+    private final String SECRET_KEY = "your_secret_key";  // Şifrəni özünüz təyin edin
 
-    // Token yaratmaq üçün metod
-    public String generateToken(String username) {
-        return Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))  // 10 saatlıq etibarlılıq
-                .signWith(SignatureAlgorithm.HS256, secretKey)
-                .compact();
+    // JWT tokenini başlıqdan alırıq
+    public String resolveToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");  // Tokeni Authorization başlığından alırıq
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);  // Bearer sözcüyündən sonra gələn tokeni qaytarırıq
+        }
+        return null;
     }
 
     // Tokeni doğrulamaq üçün metod
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);  // Tokeni doğrulayırıq
             return true;
         } catch (Exception e) {
-            return false;
+            return false;  // Əgər doğrulama uğursuz olarsa, false qaytarırıq
         }
     }
 
-    // Token-dən istifadəçi adı çıxarmaq üçün metod
+    // Tokenin içindən istifadəçi adını çıxarmaq üçün metod
     public String extractUsername(String token) {
-        return extractClaims(token).getSubject();
+        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getSubject();
     }
 
-    // Claims-dən məlumatları çıxarmaq üçün metod
-    private Claims extractClaims(String token) {
-        return Jwts.parser()
-                .setSigningKey(secretKey)
-                .parseClaimsJws(token)
-                .getBody();
+    // Token yaratmaq üçün metod (optional)
+    public String generateToken(String username) {
+        return Jwts.builder()
+                .setSubject(username)
+                .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
+                .compact();
     }
 }
