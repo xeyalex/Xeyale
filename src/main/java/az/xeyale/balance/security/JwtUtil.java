@@ -2,14 +2,17 @@ package az.xeyale.balance.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 
+import java.security.Key;
+import java.util.Date;
 
 @Component
 public class JwtUtil {
 
-    private final String SECRET_KEY = "your_secret_key";  // Şifrəni özünüz təyin edin
+    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);  // Güclü bir açar yaradılır
 
     // JWT tokenini başlıqdan alırıq
     public String resolveToken(HttpServletRequest request) {
@@ -23,7 +26,7 @@ public class JwtUtil {
     // Tokeni doğrulamaq üçün metod
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);  // Tokeni doğrulayırıq
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);  // Tokeni doğrulayırıq
             return true;
         } catch (Exception e) {
             return false;  // Əgər doğrulama uğursuz olarsa, false qaytarırıq
@@ -32,14 +35,17 @@ public class JwtUtil {
 
     // Tokenin içindən istifadəçi adını çıxarmaq üçün metod
     public String extractUsername(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
     }
 
-    // Token yaratmaq üçün metod (optional)
+    // Yeni bir JWT tokeni yaratmaq üçün metod
     public String generateToken(String username) {
+        long expirationTimeMs = 1000 * 60 * 60;  // 1 saatlıq keçərlilik müddəti
         return Jwts.builder()
                 .setSubject(username)
-                .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTimeMs))
+                .signWith(key)
                 .compact();
     }
 }

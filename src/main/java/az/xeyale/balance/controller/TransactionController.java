@@ -7,29 +7,30 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/transactions")
+@RequestMapping("/transactions")
 public class TransactionController {
 
     @Autowired
     private TransactionService transactionService;
 
-    // Yeni əməliyyat yaratmaq
-    @PostMapping
-    public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction) {
-        Transaction createdTransaction = transactionService.createTransaction(transaction);
-        return ResponseEntity.ok(createdTransaction);
-    }
-
-    // İki tarix aralığında əməliyyatları tapmaq
+    // Tarix aralığında əməliyyatları tapmaq
     @GetMapping("/user/{userId}/range")
     public ResponseEntity<List<Transaction>> getTransactionsByDateRange(
             @PathVariable Long userId,
-            @RequestParam LocalDateTime startDate,
-            @RequestParam LocalDateTime endDate) {
-        List<Transaction> transactions = transactionService.getTransactionsByUserIdAndDateRange(userId, startDate, endDate);
+            @RequestParam String startDate,  // Parametrlər String olaraq alınır
+            @RequestParam String endDate) {  // Parametrlər String olaraq alınır
+
+        // Stringləri LocalDateTime formatına çeviririk
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime start = LocalDateTime.parse(startDate, formatter);
+        LocalDateTime end = LocalDateTime.parse(endDate, formatter);
+
+        // TransactionService-dən tarix aralığına əsasən əməliyyatları alırıq
+        List<Transaction> transactions = transactionService.getTransactionsByUserIdAndDateRange(userId, start, end);
         return ResponseEntity.ok(transactions);
     }
 
