@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qeydiyyat Forması</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        input[type="text"], input[type="password"], input[type="email"], input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color: #FF69B4; /* Çəhrayı rəng */
+            color: white;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #FF1493; /* Tünd çəhrayı rəng */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Qeydiyyat</h1>
+    <form action="/register" method="post">
+        <label for="username">İstifadəçi adı:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="email">E-poçt:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Şifrə:</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="confirmPassword">Şifrəni Təkrarla:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+        <input type="submit" value="Qeydiyyatdan Keç">
+    </form>
+</div>
+
+</body>
+</html>

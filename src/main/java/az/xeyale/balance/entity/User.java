@@ -40,7 +40,7 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
-    // Default constructor
+    // Default constructor for JPA
     public User() {
         // Default constructor for JPA
     }

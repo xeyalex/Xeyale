@@ -8,7 +8,6 @@ import az.xeyale.balance.security.JwtUtil;  // JwtUtil sinifini import edirik
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;  // Şifrəni şifrələmək üçün import
@@ -16,9 +15,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Optional;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService implements org.springframework.security.core.userdetails.UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private JwtUtil jwtUtil;  // JwtUtil sinifini inject edirik
 
-    // loadUserByUsername metodu
+    // loadUserByUsername metodu (autentifikasiya üçün)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username)
@@ -68,5 +68,10 @@ public class UserService implements UserDetailsService {
     public User findByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+    }
+
+    // Yeni istifadəçi əlavə etmək
+    public void save(User user) {
+        userRepository.save(user);
     }
 }
