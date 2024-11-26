@@ -1,4 +1,4 @@
-package xeyale.balance;
+package xeyale.balance.handler;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;

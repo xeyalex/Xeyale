@@ -6,8 +6,8 @@ import lombok.Data;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
 @Data
+@Entity
 public class Role {
 
     @Id

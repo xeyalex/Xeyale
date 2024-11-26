@@ -32,13 +32,13 @@ public class DataLoader implements CommandLineRunner {
         User user = new User();
         user.setUsername("user");
         user.setPassword("userpass");
-        user.setRoles(Set.of(userRole));
+        user.setRoles(Set.of(userRole));  // USER rolunu əlavə etmək
         userRepository.save(user);
 
         User admin = new User();
         admin.setUsername("admin");
         admin.setPassword("adminpass");
-        admin.setRoles(Set.of(adminRole));
+        admin.setRoles(Set.of(adminRole));  // ADMIN rolunu əlavə etmək
         userRepository.save(admin);
     }
 }
