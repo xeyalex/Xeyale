@@ -3,6 +3,8 @@ package xeyale.balance.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import xeyale.balance.request.LoginRequest;
+import xeyale.balance.request.RegisterRequest;
 import xeyale.balance.service.MyUserDetailsService;
 
 @RestController

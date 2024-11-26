@@ -1,4 +1,4 @@
-package xeyale.balance.controller;
+package xeyale.balance.request;
 
 import lombok.Data;
 
