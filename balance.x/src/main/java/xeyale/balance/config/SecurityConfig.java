@@ -15,8 +15,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()  // CSRF qorumasını deaktiv edin
-                .authorizeHttpRequests()  // Burada `authorizeHttpRequests()` istifadə edilir
-                .requestMatchers("/api/users/register", "/api/users/login", "/register", "/login").permitAll()  // Bu yolları açıq saxlayın
+                .authorizeHttpRequests()  // Http sorğularını idarə etmək
+                .requestMatchers("/api/users/register", "/api/users/login", "/register", "/login") // Bu URL-lərə girişə icazə verin
+                .permitAll()
                 .anyRequest().authenticated()  // Digər sorğular autentifikasiya tələb edir
                 .and()
                 .httpBasic();  // Basic Authentication istifadə edin
@@ -26,6 +27,6 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder();  // Parol şifrələmək üçün BCrypt istifadə edirik
     }
 }
