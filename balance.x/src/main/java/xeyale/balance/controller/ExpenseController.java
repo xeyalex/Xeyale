@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import xeyale.balance.entity.Expense;  // `Expense` entity sinifi istifadə edilir
+import xeyale.balance.entity.Expense;
 import xeyale.balance.service.ExpenseService;
 
 import java.util.List;
@@ -28,7 +28,8 @@ public class ExpenseController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Expense> getExpenseById(@PathVariable Long id) {
-        return new ResponseEntity<>(expenseService.getExpenseById(id).orElseThrow(), HttpStatus.OK);
+        Expense expense = expenseService.getExpenseById(id).orElseThrow();
+        return new ResponseEntity<>(expense, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
