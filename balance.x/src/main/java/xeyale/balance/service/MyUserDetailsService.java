@@ -18,13 +18,13 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // Optional istifadə edilərək null yoxlaması həyata keçirilir
+        // Optional ilə istifadəçi tapılır, tapılmadıqda istisna atılır
         xeyale.balance.entity.User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         return User.withUsername(user.getUsername())
                 .password(user.getPassword())
-                .roles("USER")  // Rolları təyin edə bilərsiniz
+                .roles("USER")  // Burada rolları təyin edə bilərsiniz
                 .build();
     }
 }

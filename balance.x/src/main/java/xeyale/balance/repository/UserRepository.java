@@ -5,6 +5,5 @@ import java.util.Optional;
 import xeyale.balance.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    // Optional ilə qaytarırıq
     Optional<User> findByUsername(String username);
 }
