@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS expense_plans (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    budget DECIMAL(10, 2) NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    user_id BIGINT,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+INSERT INTO expense_plans (budget, start_date, end_date, user_id)
+VALUES
+(2000.00, '2024-11-01', '2024-11-30', 2);

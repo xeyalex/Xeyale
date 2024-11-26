@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS expenses (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    amount DECIMAL(10, 2) NOT NULL,
+    description VARCHAR(255),
+    date DATE NOT NULL,
+    user_id BIGINT,
+    category_id BIGINT,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (category_id) REFERENCES expense_categories(id)
+);
+
+INSERT INTO expenses (amount, description, date, user_id, category_id)
+VALUES
+(50.00, 'Grocery shopping', '2024-11-25', 2, 1),
+(1000.00, 'Monthly rent', '2024-11-01', 2, 2),
+(150.00, 'Electricity bill', '2024-11-10', 2, 3);

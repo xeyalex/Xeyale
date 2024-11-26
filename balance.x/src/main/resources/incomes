@@ -1,0 +1,15 @@
+CREATE TABLE IF NOT EXISTS incomes (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    amount DECIMAL(10, 2) NOT NULL,
+    description VARCHAR(255),
+    date DATE NOT NULL,
+    user_id BIGINT,
+    category_id BIGINT,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (category_id) REFERENCES income_categories(id)
+);
+
+INSERT INTO incomes (amount, description, date, user_id, category_id)
+VALUES
+(2000.00, 'Monthly salary', '2024-11-05', 2, 1),
+(500.00, 'Freelance project', '2024-11-15', 3, 2);

@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS income_categories (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+
+INSERT INTO income_categories (name)
+VALUES
+('Salary'),
+('Freelance'),
+('Investments');

@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS expense_categories (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+
+INSERT INTO expense_categories (name)
+VALUES
+('Food'),
+('Rent'),
+('Utilities'),
+('Entertainment');
